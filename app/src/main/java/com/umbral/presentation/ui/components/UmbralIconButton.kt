@@ -38,7 +38,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkBackgroundBase
 import com.umbral.presentation.ui.theme.UmbralSpacing
 import com.umbral.presentation.ui.theme.UmbralTheme
 
@@ -123,7 +122,7 @@ fun UmbralIconButton(
             } else {
                 MaterialTheme.colorScheme.onSurface
             }
-            IconButtonVariant.Filled -> Color(0xFF151515) // Dark color for filled variant
+            IconButtonVariant.Filled -> MaterialTheme.colorScheme.onPrimary
             IconButtonVariant.Tonal -> MaterialTheme.colorScheme.primary
         }
     }
@@ -179,7 +178,7 @@ private fun UmbralIconButtonGhostPreview() {
     UmbralTheme {
         Box(
             modifier = Modifier
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(16.dp)
         ) {
             Row {
@@ -217,7 +216,7 @@ private fun UmbralIconButtonFilledPreview() {
     UmbralTheme {
         Box(
             modifier = Modifier
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(16.dp)
         ) {
             Row {
@@ -255,7 +254,7 @@ private fun UmbralIconButtonTonalPreview() {
     UmbralTheme {
         Box(
             modifier = Modifier
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(16.dp)
         ) {
             Row {
@@ -293,7 +292,7 @@ private fun UmbralIconButtonDisabledPreview() {
     UmbralTheme {
         Box(
             modifier = Modifier
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(16.dp)
         ) {
             Row {
@@ -331,7 +330,7 @@ private fun UmbralIconButtonAllVariantsPreview() {
     UmbralTheme {
         Box(
             modifier = Modifier
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .padding(16.dp)
         ) {
             Row {

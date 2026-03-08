@@ -115,6 +115,13 @@ fun UmbralCheckbox(
         label = "checkmarkProgress"
     )
 
+    // Capture checkmark color in composable scope (not available inside DrawScope)
+    val checkmarkColor = if (enabled) {
+        MaterialTheme.colorScheme.onPrimary
+    } else {
+        MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f)
+    }
+
     Row(
         modifier = modifier
             .clickable(
@@ -154,7 +161,6 @@ fun UmbralCheckbox(
 
             // Draw checkmark if checked
             if (checkProgress > 0f) {
-                val checkmarkColor = if (enabled) Color.White else Color.White.copy(alpha = 0.6f)
                 val checkmarkStrokeWidth = 2.dp.toPx()
 
                 // Checkmark path (approximate coordinates for 24x24 box)

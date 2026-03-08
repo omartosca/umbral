@@ -38,21 +38,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkBackgroundElevated
-import com.umbral.presentation.ui.theme.DarkBorderDefault
-import com.umbral.presentation.ui.theme.DarkError
 import com.umbral.presentation.ui.theme.DarkSuccess
-import com.umbral.presentation.ui.theme.DarkTextPrimary
 import com.umbral.presentation.ui.theme.DarkWarning
-import com.umbral.presentation.ui.theme.LightBackgroundElevated
-import com.umbral.presentation.ui.theme.LightBorderDefault
-import com.umbral.presentation.ui.theme.LightError
 import com.umbral.presentation.ui.theme.LightSuccess
-import com.umbral.presentation.ui.theme.LightTextPrimary
 import com.umbral.presentation.ui.theme.LightWarning
 import com.umbral.presentation.ui.theme.UmbralMotion
 import com.umbral.presentation.ui.theme.UmbralTheme
@@ -96,7 +88,7 @@ data class SnackbarAction(
  * with support for different variants, actions, and auto-dismiss durations.
  *
  * Visual Specs:
- * - Background: DarkBackgroundElevated / LightBackgroundElevated
+ * - Background: surfaceContainerHigh (MD3 role, auto-adapts to theme + dynamic color)
  * - Border: 1px semantic color based on variant
  * - Corner Radius: 12.dp
  * - Padding: 16.dp
@@ -118,31 +110,18 @@ fun UmbralSnackbar(
     action: SnackbarAction? = null,
     duration: SnackbarDuration = SnackbarDuration.Medium
 ) {
-    val isDark = MaterialTheme.colorScheme.background == Color(0xFF151515) ||
-                 MaterialTheme.colorScheme.background == DarkBackgroundElevated
+    val isDark = isSystemInDarkTheme()
 
     // Colors based on variant and theme
     val (borderColor, icon) = when (variant) {
-        SnackbarVariant.Default -> {
-            val border = if (isDark) DarkBorderDefault else LightBorderDefault
-            Pair(border, null)
-        }
-        SnackbarVariant.Success -> {
-            val border = if (isDark) DarkSuccess else LightSuccess
-            Pair(border, Icons.Default.Check)
-        }
-        SnackbarVariant.Error -> {
-            val border = if (isDark) DarkError else LightError
-            Pair(border, Icons.Default.Close)
-        }
-        SnackbarVariant.Warning -> {
-            val border = if (isDark) DarkWarning else LightWarning
-            Pair(border, Icons.Default.Warning)
-        }
+        SnackbarVariant.Default -> Pair(MaterialTheme.colorScheme.outlineVariant, null)
+        SnackbarVariant.Success -> Pair(if (isDark) DarkSuccess else LightSuccess, Icons.Default.Check)
+        SnackbarVariant.Error -> Pair(MaterialTheme.colorScheme.error, Icons.Default.Close)
+        SnackbarVariant.Warning -> Pair(if (isDark) DarkWarning else LightWarning, Icons.Default.Warning)
     }
 
-    val backgroundColor = if (isDark) DarkBackgroundElevated else LightBackgroundElevated
-    val textColor = if (isDark) DarkTextPrimary else LightTextPrimary
+    val backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh
+    val textColor = MaterialTheme.colorScheme.onSurface
 
     Card(
         modifier = modifier

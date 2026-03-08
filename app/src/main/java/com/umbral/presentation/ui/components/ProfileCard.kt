@@ -244,7 +244,7 @@ private fun getProfileIcon(iconName: String): ImageVector {
 
 @Composable
 fun ActiveBadge(modifier: Modifier = Modifier) {
-    val successColor = Color(0xFF4CAF50)
+    val successColor = MaterialTheme.colorScheme.tertiary
 
     Surface(
         modifier = modifier,

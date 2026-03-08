@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
  * - Smooth fade + scale animations
  *
  * ## Design Specs
- * - Background: DarkBackgroundElevated / LightBackgroundElevated (90% opacity)
+ * - Background: surfaceContainerHigh at 90% opacity (MD3 role, auto-adapts to theme + dynamic color)
  * - Corner Radius: Full (pill shape)
  * - Padding: 12.dp horizontal, 8.dp vertical
  * - Height: auto (~36-40.dp)
@@ -163,19 +163,8 @@ fun UmbralToast(
     icon: ImageVector? = null,
     modifier: Modifier = Modifier
 ) {
-    val isDark = !MaterialTheme.colorScheme.surface.equals(LightBackgroundSurface)
-
-    val backgroundColor = if (isDark) {
-        DarkBackgroundElevated.copy(alpha = 0.9f)
-    } else {
-        LightBackgroundElevated.copy(alpha = 0.9f)
-    }
-
-    val textColor = if (isDark) {
-        DarkTextPrimary
-    } else {
-        LightTextPrimary
-    }
+    val backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f)
+    val textColor = MaterialTheme.colorScheme.onSurface
 
     Row(
         modifier = modifier
@@ -218,7 +207,7 @@ private fun PreviewToastSimpleLight() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LightBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -234,7 +223,7 @@ private fun PreviewToastSimpleDark() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -250,7 +239,7 @@ private fun PreviewToastSuccessLight() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LightBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -269,7 +258,7 @@ private fun PreviewToastSuccessDark() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -288,7 +277,7 @@ private fun PreviewToastInfoLight() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LightBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -307,7 +296,7 @@ private fun PreviewToastWarningDark() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -326,7 +315,7 @@ private fun PreviewToastLongLight() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LightBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -348,7 +337,7 @@ private fun PreviewToastHost() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             // Toast host
             UmbralToastHost(toastState = toastState)

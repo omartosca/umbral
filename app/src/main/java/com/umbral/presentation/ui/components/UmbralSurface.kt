@@ -1,7 +1,6 @@
 package com.umbral.presentation.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkBackgroundBase
-import com.umbral.presentation.ui.theme.DarkBackgroundElevated
-import com.umbral.presentation.ui.theme.DarkBackgroundSurface
-import com.umbral.presentation.ui.theme.LightBackgroundBase
-import com.umbral.presentation.ui.theme.LightBackgroundElevated
-import com.umbral.presentation.ui.theme.LightBackgroundSurface
 import com.umbral.presentation.ui.theme.UmbralTheme
 
 /**
@@ -63,21 +55,12 @@ fun UmbralSurface(
     shape: Shape = MaterialTheme.shapes.medium,
     content: @Composable () -> Unit
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
-
-    // Get background color based on elevation and theme
+    // Map elevation levels to MD3 surface color roles
     val backgroundColor = when (elevation) {
-        SurfaceElevation.Level0 -> if (isDarkTheme) DarkBackgroundBase else LightBackgroundBase
-        SurfaceElevation.Level1 -> if (isDarkTheme) DarkBackgroundSurface else LightBackgroundSurface
-        SurfaceElevation.Level2 -> if (isDarkTheme) DarkBackgroundElevated else LightBackgroundElevated
-        SurfaceElevation.Level3 -> {
-            // Level 3 = Elevated + 2% white overlay (dark) or 2% black overlay (light)
-            val baseColor = if (isDarkTheme) DarkBackgroundElevated else LightBackgroundElevated
-            val overlay = if (isDarkTheme) Color.White.copy(alpha = 0.02f) else Color.Black.copy(alpha = 0.02f)
-            // Note: In production, you'd blend these properly. For simplicity, we'll just use the base color
-            // with a slight adjustment. Proper blending would require color manipulation utilities.
-            baseColor
-        }
+        SurfaceElevation.Level0 -> MaterialTheme.colorScheme.background
+        SurfaceElevation.Level1 -> MaterialTheme.colorScheme.surface
+        SurfaceElevation.Level2 -> MaterialTheme.colorScheme.surfaceContainerHigh
+        SurfaceElevation.Level3 -> MaterialTheme.colorScheme.surfaceContainerHighest
     }
 
     Box(
@@ -100,7 +83,7 @@ private fun UmbralSurfaceAllLevelsLightPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LightBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Column {
@@ -171,7 +154,7 @@ private fun UmbralSurfaceAllLevelsDarkPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Column {

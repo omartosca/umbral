@@ -1,7 +1,6 @@
 package com.umbral.presentation.ui.components.empty
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -15,10 +14,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkAccentPrimary
-import com.umbral.presentation.ui.theme.DarkTextTertiary
-import com.umbral.presentation.ui.theme.LightAccentPrimary
-import com.umbral.presentation.ui.theme.LightTextTertiary
 
 /**
  * Illustration types for empty states
@@ -42,9 +37,8 @@ fun EmptyStateIllustrationView(
     type: EmptyStateIllustration,
     modifier: Modifier = Modifier
 ) {
-    val isDark = isSystemInDarkTheme()
-    val baseColor = if (isDark) DarkTextTertiary else LightTextTertiary
-    val accentColor = if (isDark) DarkAccentPrimary else LightAccentPrimary
+    val baseColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val accentColor = MaterialTheme.colorScheme.primary
 
     Canvas(modifier = modifier.size(120.dp)) {
         when (type) {

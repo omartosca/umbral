@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -188,32 +189,32 @@ private data class BadgeColors(
  */
 @Composable
 private fun getBadgeColors(variant: BadgeVariant): BadgeColors {
-    val isDark = MaterialTheme.colorScheme.background == DarkBackgroundBase
+    val isDark = isSystemInDarkTheme()
 
     return when (variant) {
         BadgeVariant.Default -> BadgeColors(
-            background = if (isDark) DarkAccentPrimary else LightAccentPrimary,
-            text = Color(0xFF151515) // Dark text on accent background
+            background = MaterialTheme.colorScheme.primary,
+            text = MaterialTheme.colorScheme.onPrimary
         )
 
         BadgeVariant.Success -> BadgeColors(
             background = if (isDark) DarkSuccess else LightSuccess,
-            text = Color(0xFF151515) // Dark text on success background
+            text = MaterialTheme.colorScheme.onSurface
         )
 
         BadgeVariant.Warning -> BadgeColors(
             background = if (isDark) DarkWarning else LightWarning,
-            text = Color(0xFF151515) // Dark text on warning background
+            text = MaterialTheme.colorScheme.onSurface
         )
 
         BadgeVariant.Error -> BadgeColors(
-            background = if (isDark) DarkError else LightError,
-            text = Color(0xFFFFFFFF) // White text on error background
+            background = MaterialTheme.colorScheme.error,
+            text = MaterialTheme.colorScheme.onError
         )
 
         BadgeVariant.Neutral -> BadgeColors(
-            background = if (isDark) DarkBackgroundSurface else LightBackgroundSurface,
-            text = if (isDark) DarkTextSecondary else LightTextSecondary
+            background = MaterialTheme.colorScheme.surfaceVariant,
+            text = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

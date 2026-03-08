@@ -1,7 +1,6 @@
 package com.umbral.presentation.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,9 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkBackgroundBase
-import com.umbral.presentation.ui.theme.DarkBorderDefault
-import com.umbral.presentation.ui.theme.LightBorderDefault
 import com.umbral.presentation.ui.theme.UmbralTheme
 
 /**
@@ -64,10 +60,8 @@ fun UmbralDivider(
     thickness: androidx.compose.ui.unit.Dp = 1.dp,
     vertical: Boolean = false
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
-
-    // Use custom color or theme's border color
-    val dividerColor = color ?: if (isDarkTheme) DarkBorderDefault else LightBorderDefault
+    // Use custom color or MD3 outline variant
+    val dividerColor = color ?: MaterialTheme.colorScheme.outlineVariant
 
     // Calculate padding based on variant
     val horizontalPadding = when (variant) {
@@ -142,7 +136,7 @@ private fun UmbralDividerVariantsDarkPreview() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(vertical = 16.dp)
         ) {
             Text(

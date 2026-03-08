@@ -28,9 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.umbral.presentation.ui.theme.DarkAccentPrimary
-import com.umbral.presentation.ui.theme.DarkSuccess
-import com.umbral.presentation.ui.theme.DarkTextTertiary
 import com.umbral.presentation.ui.theme.UmbralMotion
 import com.umbral.presentation.ui.theme.UmbralTheme
 
@@ -158,9 +155,9 @@ private fun AvatarBadgeIndicator(
         contentAlignment = Alignment.BottomEnd
     ) {
         val badgeColor = when (badge) {
-            AvatarBadge.Online -> DarkSuccess
-            AvatarBadge.Offline -> DarkTextTertiary
-            AvatarBadge.Active -> DarkAccentPrimary
+            AvatarBadge.Online -> MaterialTheme.colorScheme.tertiary
+            AvatarBadge.Offline -> MaterialTheme.colorScheme.onSurfaceVariant
+            AvatarBadge.Active -> MaterialTheme.colorScheme.primary
             AvatarBadge.None -> return
         }
 

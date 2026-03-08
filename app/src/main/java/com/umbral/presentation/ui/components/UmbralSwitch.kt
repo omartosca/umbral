@@ -23,18 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkAccentPrimary
-import com.umbral.presentation.ui.theme.DarkBorderDefault
-import com.umbral.presentation.ui.theme.DarkTextSecondary
-import com.umbral.presentation.ui.theme.LightAccentPrimary
-import com.umbral.presentation.ui.theme.LightBorderDefault
-import com.umbral.presentation.ui.theme.LightTextSecondary
 import com.umbral.presentation.ui.theme.UmbralTheme
-import com.umbral.presentation.ui.theme.isUmbralDarkTheme
 
 /**
  * Umbral Design System 2.0 - Switch Component
@@ -118,7 +110,6 @@ private fun UmbralSwitchCore(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    val isDark = isUmbralDarkTheme()
     val interactionSource = remember { MutableInteractionSource() }
 
     // Design System 2.0 specs
@@ -142,12 +133,8 @@ private fun UmbralSwitchCore(
     val trackColor by animateColorAsState(
         targetValue = when {
             !enabled -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.38f)
-            checked -> if (isDark) DarkAccentPrimary else LightAccentPrimary
-            else -> {
-                // Off state: borderDefault with 12% opacity
-                val borderColor = if (isDark) DarkBorderDefault else LightBorderDefault
-                borderColor.copy(alpha = 0.12f)
-            }
+            checked -> MaterialTheme.colorScheme.primary
+            else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.12f)
         },
         animationSpec = tween(durationMillis = 200),
         label = "trackColor"
@@ -157,8 +144,8 @@ private fun UmbralSwitchCore(
     val thumbColor by animateColorAsState(
         targetValue = when {
             !enabled -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
-            checked -> Color(0xFF151515) // Dark color for thumb when on
-            else -> if (isDark) DarkTextSecondary else LightTextSecondary
+            checked -> MaterialTheme.colorScheme.onPrimary
+            else -> MaterialTheme.colorScheme.onSurfaceVariant
         },
         animationSpec = tween(durationMillis = 200),
         label = "thumbColor"

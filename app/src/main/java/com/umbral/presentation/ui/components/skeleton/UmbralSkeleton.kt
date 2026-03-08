@@ -2,16 +2,15 @@ package com.umbral.presentation.ui.components.skeleton
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalAccessibilityManager
 import androidx.compose.ui.unit.dp
@@ -22,10 +21,8 @@ import androidx.compose.ui.unit.dp
  * Base skeleton component with shimmer animation for loading states.
  *
  * ## Visual Specs
- * - Background Dark: #252525
- * - Background Light: #E8E8E8
- * - Shimmer Highlight Dark: #303030
- * - Shimmer Highlight Light: #F5F5F5
+ * - Background: surfaceContainerHigh (MD3 role, adapts to light/dark + dynamic color)
+ * - Shimmer Highlight: surfaceContainerHighest (MD3 role, slightly lighter/darker than background)
  * - Animation: shimmer left-to-right, 1200ms, infinite
  *
  * ## Accessibility
@@ -53,7 +50,6 @@ fun UmbralSkeleton(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(8.dp)
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
     val accessibilityManager = LocalAccessibilityManager.current
 
     // Check if "Reduce Motion" is enabled
@@ -64,18 +60,9 @@ fun UmbralSkeleton(
         containsControls = false
     ) == Long.MAX_VALUE
 
-    // Skeleton colors based on theme
-    val backgroundColor = if (isDarkTheme) {
-        Color(0xFF252525) // Dark background
-    } else {
-        Color(0xFFE8E8E8) // Light background
-    }
-
-    val highlightColor = if (isDarkTheme) {
-        Color(0xFF303030) // Dark highlight
-    } else {
-        Color(0xFFF5F5F5) // Light highlight
-    }
+    // Skeleton colors from MD3 surface container roles (auto-adapts to light/dark + dynamic color)
+    val backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh
+    val highlightColor = MaterialTheme.colorScheme.surfaceContainerHighest
 
     // Shimmer animation colors
     val shimmerColors = listOf(
