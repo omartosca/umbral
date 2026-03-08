@@ -6,7 +6,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -39,8 +38,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkBackgroundBase
-import com.umbral.presentation.ui.theme.LightBackgroundBase
 import com.umbral.presentation.ui.theme.UmbralTheme
 
 // =============================================================================
@@ -72,14 +69,11 @@ fun UmbralTopBar(
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = { }
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
-    val backgroundColor = if (isDarkTheme) DarkBackgroundBase else LightBackgroundBase
-
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(64.dp)
-            .background(backgroundColor),
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.CenterStart
     ) {
         Row(
@@ -149,7 +143,6 @@ fun UmbralTabRow(
     onTabSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
     val selectedColor = MaterialTheme.colorScheme.onBackground
     val unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
     val indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
@@ -295,7 +288,7 @@ private fun UmbralTopBarDarkPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             UmbralTopBar(
                 title = "Configuración",
@@ -363,7 +356,7 @@ private fun UmbralTabRowDarkPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             UmbralTabRow(

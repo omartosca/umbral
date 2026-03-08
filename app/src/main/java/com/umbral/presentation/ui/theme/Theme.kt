@@ -5,12 +5,15 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
@@ -21,7 +24,8 @@ import androidx.core.view.WindowCompat
  * - Light theme: Soft gray backgrounds with pure white surfaces
  * - Dark theme: Deep OLED-optimized blacks with subtle elevation
  *
- * No dynamic color - we want consistent brand identity
+ * Supports Dynamic Color (Material You) on Android 12+.
+ * Falls back to Umbral sage teal palette on older devices.
  */
 
 // =============================================================================
@@ -146,14 +150,25 @@ private val DarkColorScheme = darkColorScheme(
  * Umbral app theme.
  *
  * @param darkTheme Whether to use dark theme. Defaults to system setting.
+ * @param dynamicColor Whether to use Dynamic Color (Material You) on Android 12+.
+ *   Falls back to the Umbral sage teal palette on older devices.
  * @param content The composable content to theme.
  */
 @Composable
 fun UmbralTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val context = LocalContext.current
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            if (darkTheme) dynamicDarkColorScheme(context)
+            else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
 
     // Update system bars color
     val view = LocalView.current
@@ -161,19 +176,9 @@ fun UmbralTheme(
         SideEffect {
             val window = (view.context as Activity).window
 
-            // Status bar color
-            window.statusBarColor = if (darkTheme) {
-                DarkBackgroundBase.toArgb()
-            } else {
-                LightBackgroundBase.toArgb()
-            }
-
-            // Navigation bar color
-            window.navigationBarColor = if (darkTheme) {
-                DarkBackgroundBase.toArgb()
-            } else {
-                LightBackgroundBase.toArgb()
-            }
+            // Use transparent system bars — let the app content handle color
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
 
             // Icon colors (light icons on dark bg, dark icons on light bg)
             WindowCompat.getInsetsController(window, view).apply {

@@ -25,22 +25,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.umbral.presentation.ui.theme.DarkAccentPrimary
-import com.umbral.presentation.ui.theme.DarkBackgroundBase
-import com.umbral.presentation.ui.theme.DarkBackgroundElevated
-import com.umbral.presentation.ui.theme.DarkBackgroundSurface
-import com.umbral.presentation.ui.theme.DarkBorderDefault
-import com.umbral.presentation.ui.theme.DarkBorderFocus
-import com.umbral.presentation.ui.theme.LightBackgroundBase
-import com.umbral.presentation.ui.theme.LightBackgroundElevated
-import com.umbral.presentation.ui.theme.LightBackgroundSurface
-import com.umbral.presentation.ui.theme.LightBorderDefault
-import com.umbral.presentation.ui.theme.LightBorderFocus
 import com.umbral.presentation.ui.theme.UmbralSpacing
 import com.umbral.presentation.ui.theme.UmbralTheme
 import com.umbral.presentation.ui.theme.surfaceColorAtElevation
@@ -140,21 +128,20 @@ fun UmbralCard(
     shape: Shape = MaterialTheme.shapes.large,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val isFocused by interactionSource.collectIsFocusedAsState()
 
-    // Background color based on variant and theme
+    // Background color based on variant
     val backgroundColor = when (variant) {
-        CardVariant.Default -> if (isDarkTheme) DarkBackgroundSurface else LightBackgroundSurface
-        CardVariant.Elevated -> if (isDarkTheme) DarkBackgroundElevated else LightBackgroundElevated
-        CardVariant.Outlined -> if (isDarkTheme) DarkBackgroundSurface else LightBackgroundSurface
-        CardVariant.Interactive -> if (isDarkTheme) DarkBackgroundSurface else LightBackgroundSurface
+        CardVariant.Default -> MaterialTheme.colorScheme.surface
+        CardVariant.Elevated -> MaterialTheme.colorScheme.surfaceContainerHigh
+        CardVariant.Outlined -> MaterialTheme.colorScheme.surface
+        CardVariant.Interactive -> MaterialTheme.colorScheme.surface
     }
 
     // Apply +4% overlay when pressed (for interactive cards only)
-    val pressedOverlay = if (isDarkTheme) Color.White.copy(alpha = 0.04f) else Color.Black.copy(alpha = 0.04f)
+    val pressedOverlay = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.04f)
 
     // Border configuration
     val borderWidth = when (variant) {
@@ -163,9 +150,9 @@ fun UmbralCard(
     }
 
     val borderColor = when {
-        isFocused && onClick != null -> if (isDarkTheme) DarkBorderFocus else LightBorderFocus
-        variant == CardVariant.Outlined -> if (isDarkTheme) DarkBorderDefault.copy(alpha = 1.5f) else LightBorderDefault.copy(alpha = 1.5f)
-        else -> if (isDarkTheme) DarkBorderDefault else LightBorderDefault
+        isFocused && onClick != null -> MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+        variant == CardVariant.Outlined -> MaterialTheme.colorScheme.outline
+        else -> MaterialTheme.colorScheme.outlineVariant
     }
 
     // Scale animation for pressed state
@@ -513,7 +500,7 @@ private fun UmbralCardDarkPreview() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(DarkBackgroundBase)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Column {
@@ -559,7 +546,7 @@ private fun UmbralCardDarkPreview() {
                     Text(
                         text = "Dark Theme - Interactive",
                         style = MaterialTheme.typography.titleMedium,
-                        color = DarkAccentPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = "Tap to see press states",

@@ -126,8 +126,8 @@ fun UmbralButton(
                 enabled = enabled,
                 shape = MaterialTheme.shapes.small,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary, // Sage teal
-                    contentColor = Color(0xFF151515) // Dark text for contrast
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 interactionSource = interactionSource,
                 contentPadding = PaddingValues(
@@ -139,7 +139,7 @@ fun UmbralButton(
                     text = text,
                     loading = loading,
                     leadingIcon = leadingIcon,
-                    contentColor = Color(0xFF151515),
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
                     textStyle = textStyle
                 )
             }
