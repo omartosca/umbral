@@ -34,7 +34,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -275,9 +274,9 @@ private fun PercentageChangeChip(
 ) {
     val isPositive = percentageChange > 0
     val chipColor = if (isPositive) {
-        Color(0xFF4CAF50) // Green - more blocking is good
+        MaterialTheme.colorScheme.tertiary // more blocking is good
     } else {
-        Color(0xFFF44336) // Red - less blocking might be concerning
+        MaterialTheme.colorScheme.error // less blocking might be concerning
     }
 
     Row(
