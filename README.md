@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Concepto
+## Concepto
 
 El nombre "Umbral" proviene del concepto filosófico griego del **metaxy (μεταξύ)** - el espacio liminal entre dos estados. Representa el momento consciente de transición al cruzar el umbral de tu casa, donde eliges tu estado digital.
 
@@ -18,67 +18,107 @@ El nombre "Umbral" proviene del concepto filosófico griego del **metaxy (μετ
 
 ---
 
-## ✨ Features (V1 - Completo)
+## Features (V1)
 
 ### Core
-- 📱 **NFC tag reading/writing** - Compatible con NTAG213/215/216
-- 🚫 **App blocking** - UsageStatsManager integration
-- ✅ **Whitelist** - Apps esenciales (banco, sistema, etc.)
-- 📋 **Multiple profiles** - Diferentes perfiles para diferentes situaciones
+- **NFC tag reading/writing** — Compatible con NTAG213/215/216
+- **App blocking** — Integración con UsageStatsManager
+- **Whitelist** — Apps esenciales siempre accesibles (banco, sistema, etc.)
+- **Multiple profiles** — Perfiles distintos para diferentes situaciones
 
 ### Advanced
-- ⏱️ **Timer auto-unlock** - Desbloqueo automático después de X tiempo
-- 📷 **QR alternative** - Fallback si NFC no disponible
-- 🎨 **Widgets** - Estado, quick toggle, countdown
-- 📊 **Statistics** - Tiempo bloqueado, apps más bloqueadas, rachas
-- 🔒 **Physical unlock** - Solo tag específico puede desbloquear (opcional)
-- 🎯 **Focus Mode** - Integración con Digital Wellbeing
-- ⚡ **Quick Settings** - Toggle desde panel rápido
+- **Timer auto-unlock** — Desbloqueo automático después de X tiempo
+- **QR alternative** — Fallback si NFC no disponible
+- **Widgets** — 4 tipos: Status, Quick Toggle, Stats, Streak
+- **Statistics** — Tiempo bloqueado, apps más bloqueadas, rachas con gráficas (Vico)
+- **Physical unlock** — Solo el tag específico puede desbloquear (opcional)
+- **Focus Mode** — Integración con Digital Wellbeing de Android
+- **Quick Settings** — Toggle desde el panel rápido
+
+### Extras
+- **Gamification (Expedition)** — Sistema de logros, compañeros y progresión
+- **Notifications module** — Seguimiento de notificaciones bloqueadas
+- **Design System v2** — Componentes Material 3 personalizados con tema Umbral
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Lenguaje:** Kotlin
-- **UI:** Jetpack Compose (Material Design 3)
-- **Arquitectura:** Clean Architecture + MVVM
-- **Database:** Room (SQLite)
-- **DI:** Hilt
-- **Build:** Gradle (Kotlin DSL)
+| Capa | Tecnología |
+|------|------------|
+| Lenguaje | Kotlin 2.1 |
+| UI | Jetpack Compose + Material Design 3 |
+| Arquitectura | Clean Architecture + MVVM |
+| Base de datos | Room 2.6 (SQLite) + DataStore |
+| DI | Hilt 2.54 |
+| Animaciones | Lottie 6.3 |
+| Gráficas | Vico 2.0 |
+| QR / Cámara | CameraX 1.4 + ML Kit Barcode |
+| Widgets | Jetpack Glance 1.1 |
+| Build | Gradle (Kotlin DSL) |
+| Tests | JUnit + MockK + Turbine + Robolectric |
 
 ---
 
-## 🚀 Estado del Proyecto
+## Estado del Proyecto
 
-**Fase actual:** 🟡 Pre-Desarrollo (Documentación)
+**Fase actual:** Desarrollo completo — Beta
 
-### Metodología: Documentation-First Development
-
-Seguimos la **Metodología Oden** donde documentamos y diseñamos COMPLETAMENTE antes de escribir código.
-
-**Progreso:**
+### Progreso
 - [x] Inicialización del proyecto
 - [x] Technical decisions documentadas
-- [ ] Arquitectura detallada (próximo paso)
-- [ ] Análisis competitivo
-- [ ] Especificaciones por módulo
-- [ ] Plan de implementación
-- [ ] Desarrollo (12-16 semanas)
+- [x] Arquitectura detallada
+- [x] Análisis competitivo
+- [x] Especificaciones por módulo
+- [x] Plan de implementación
+- [x] Desarrollo (todos los features V1 implementados)
+- [x] Testing (150+ unit tests)
+- [x] Design System v2
+- [x] Gamification system (Expedition)
+- [x] Firebase App Distribution configurado
+- [ ] Release en Google Play Store
+- [ ] Release en F-Droid
+
+### Base de Datos
+- **Room versión:** 6
+- **Tablas:** 12 (perfiles, apps, NFC, sesiones, intentos, eventos, gamificación, notificaciones)
+- **Migraciones:** v1 → v6 con scripts completos
 
 ---
 
-## 📚 Documentación
+## Build & Run
 
-Ver [docs/README.md](docs/README.md) para documentación completa.
+**Requisitos:**
+- Android Studio Hedgehog o superior
+- JDK 17
+- Android SDK 35
 
-**Documentos clave:**
-- [Technical Decisions](docs/reference/technical-decisions.md) - Stack, arquitectura y decisiones
-- [Competitive Analysis](docs/reference/competitive-analysis.md) - Análisis de mercado (pendiente)
-- [Implementation Plan](docs/reference/implementation-plan.md) - Plan detallado (pendiente)
+```bash
+git clone https://github.com/omartosca/umbral.git
+cd umbral
+./gradlew assembleDebug
+```
+
+Para tests:
+
+```bash
+./gradlew test
+```
 
 ---
 
-## 🤝 Inspiración y Colaboración
+## Documentación
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Guía de contribución y workflow de branches
+- [TESTS_IMPLEMENTED.md](TESTS_IMPLEMENTED.md) — Resumen de tests implementados
+- [docs/README.md](docs/README.md) — Índice de documentación técnica completa
+- [docs/reference/technical-decisions.md](docs/reference/technical-decisions.md) — Stack, arquitectura y decisiones
+- [docs/reference/competitive-analysis.md](docs/reference/competitive-analysis.md) — Análisis de mercado
+- [docs/reference/modules/](docs/reference/modules/) — Specs técnicas por módulo
+
+---
+
+## Inspiración y Colaboración
 
 Umbral está inspirado en [**Foqos**](https://github.com/awaseem/foqos), una excelente app iOS open-source con funcionalidad similar.
 
@@ -90,96 +130,90 @@ Umbral está inspirado en [**Foqos**](https://github.com/awaseem/foqos), una exc
 
 ---
 
-## 🎨 Diferenciadores
+## Diferenciadores
 
 vs **Foqos** (iOS open source):
-- ✅ Plataforma Android
-- ✅ UX más pulida y onboarding mejorado
-- ✅ Mercado hispanohablante (UI en español)
+- Plataforma Android nativa
+- UI en español para el mercado hispanohablante
+- Sistema de gamificación integrado
 
 vs **Brick** (iOS/Android comercial):
-- ✅ 100% gratis y open source
-- ✅ No requiere hardware propietario
-- ✅ Tags NFC baratos de Amazon
+- 100% gratis y open source
+- No requiere hardware propietario
+- Tags NFC baratos (desde $1 USD)
 
 vs **Unpluq** (iOS/Android comercial):
-- ✅ Sin suscripción mensual
-- ✅ Código abierto
-- ✅ Privacidad total (100% local, sin cloud)
+- Sin suscripción mensual
+- Código abierto y auditable
+- Privacidad total (100% local, sin cloud)
 
 ---
 
-## 🔒 Privacidad
+## Privacidad
 
-- 🔐 **100% local** - Sin backend en V1
-- 🔐 **Sin tracking** - Cero analytics por defecto
-- 🔐 **Open source** - Auditable por cualquiera
-- 🔐 **Sin permisos innecesarios** - Solo lo estrictamente necesario
-
----
-
-## 📦 Distribución
-
-**Planeada:**
-- Google Play Store (primario)
-- F-Droid (secundario, para usuarios privacy-focused)
+- **100% local** — Sin backend en V1
+- **Sin tracking** — Cero analytics por defecto
+- **Open source** — Auditable por cualquiera
+- **Sin permisos innecesarios** — Solo los estrictamente necesarios
 
 ---
 
-## 🗺️ Roadmap
+## Distribución
 
-### V1.0 - Core (12-16 semanas)
-Todas las features listadas arriba
+- Google Play Store (primario) — *próximamente*
+- F-Droid (secundario, usuarios privacy-focused) — *próximamente*
 
-### V1.1 - Refinement (2 semanas)
-Bug fixes y polish basado en feedback
+---
 
-### V2.0 - Cloud Features (4-6 semanas)
-- Supabase backend (opcional)
-- Cloud sync de perfiles
+## Roadmap
+
+### V1.0 — Core (completado)
+Todos los features listados arriba implementados y testeados.
+
+### V1.1 — Polish (en progreso)
+- Bug fixes basados en feedback beta
+- Mejoras de UX en onboarding
+- Optimizaciones de rendimiento
+
+### V2.0 — Cloud Features
+- Backend Supabase (opcional, opt-in)
+- Sync de perfiles entre dispositivos
 - Multi-device support
-- Premium tier
+- Tier premium
 
-### V3.0 - Advanced (6-8 semanas)
-- Website blocking
-- Location-based triggers
-- Scheduled blocking
+### V3.0 — Advanced
+- Bloqueo de sitios web
+- Triggers por geolocalización
+- Bloqueo programado por horario
 - Social features (accountability partner)
 
 ---
 
-## 👥 Contribuciones
+## Contribuciones
 
-**¡Contributions welcome!**
+¡Contribuciones bienvenidas!
 
-Este proyecto está en fase de documentación. Una vez que empecemos desarrollo, publicaremos guías de contribución.
+Lee [CONTRIBUTING.md](CONTRIBUTING.md) para el workflow de ramas, formato de commits y convenciones de código. En resumen:
 
-Por ahora, si quieres ayudar:
-- ⭐ Dale star al repo
-- 💡 Sugiere features (Issues)
-- 📖 Revisa la documentación y da feedback
-
----
-
-## 📄 Licencia
-
-[Pendiente definir - probablemente MIT]
+- Forkea el repo y crea una rama `feature/nombre-feature`
+- Escribe tests para tu código
+- Abre un PR contra `develop`
 
 ---
 
-## 🙏 Agradecimientos
+## Licencia
 
-- [Foqos](https://github.com/awaseem/foqos) - Inspiración y referencia
+MIT — ver [LICENSE](LICENSE)
+
+---
+
+## Agradecimientos
+
+- [Foqos](https://github.com/awaseem/foqos) — Inspiración y referencia iOS
 - Comunidad open source de Android
-- Filósofos griegos por el concepto de metaxy 😄
-
----
-
-## 📬 Contacto
-
-[Pendiente: agregar info de contacto]
+- Filósofos griegos por el concepto de metaxy
 
 ---
 
 **Proyecto iniciado:** 2026-01-03
-**Filosofía:** Documentation-First Development (Metodología Oden)
+**Última actualización:** 2026-03-08
