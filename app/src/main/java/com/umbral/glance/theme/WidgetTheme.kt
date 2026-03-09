@@ -82,7 +82,7 @@ object WidgetColors {
      * Text on primary color backgrounds
      * White for maximum contrast on sage teal
      */
-    val onPrimary = ColorProvider(Color(0xFFFFFFFF))  // White
+    val onPrimary = ColorProvider(Color.White)
 
     // =============================================================================
     // SEMANTIC COLORS

@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -230,11 +229,9 @@ fun UmbralCard(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isDarkTheme = isSystemInDarkTheme()
 
-    // Use different elevation values for light and dark themes
-    val defaultElevation = if (isDarkTheme) elevation.darkDefault else elevation.lightDefault
-    val pressedElevation = if (isDarkTheme) elevation.darkPressed else elevation.lightPressed
+    val defaultElevation = elevation.lightDefault
+    val pressedElevation = elevation.lightPressed
 
     val animatedElevation by animateDpAsState(
         targetValue = if (isPressed && onClick != null) pressedElevation else defaultElevation,
@@ -245,12 +242,7 @@ fun UmbralCard(
         label = "cardElevation"
     )
 
-    // In dark mode, use tonal surface color for elevation instead of shadows
-    val containerColor = if (isDarkTheme) {
-        surfaceColorAtElevation(elevation.surfaceLevel)
-    } else {
-        MaterialTheme.colorScheme.surface
-    }
+    val containerColor = surfaceColorAtElevation(elevation.surfaceLevel)
 
     if (onClick != null) {
         Card(
@@ -312,14 +304,8 @@ fun UmbralOutlinedCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isDarkTheme = isSystemInDarkTheme()
 
-    // In dark mode, use a slightly elevated surface for better contrast
-    val containerColor = if (isDarkTheme) {
-        surfaceColorAtElevation(SurfaceElevation.Level1)
-    } else {
-        MaterialTheme.colorScheme.surface
-    }
+    val containerColor = MaterialTheme.colorScheme.surface
 
     if (onClick != null) {
         androidx.compose.material3.OutlinedCard(

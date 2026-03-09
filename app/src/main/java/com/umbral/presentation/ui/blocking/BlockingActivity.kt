@@ -493,7 +493,7 @@ private fun ElapsedTimeCard(
             Icon(
                 imageVector = Icons.Outlined.Timer,
                 contentDescription = null,
-                tint = Color(0xFF64B5F6), // Azul claro
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -547,7 +547,7 @@ private fun StreakCard(
             Icon(
                 imageVector = Icons.Outlined.LocalFireDepartment,
                 contentDescription = null,
-                tint = Color(0xFFFF9800),
+                tint = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -717,8 +717,7 @@ private fun BreathingShieldIcon(modifier: Modifier = Modifier) {
         label = "breathingAlpha"
     )
 
-    // Colores para dark mode
-    val glowColor = Color(0xFF4A90D9)  // Azul brillante para contraste
+    val glowColor = MaterialTheme.colorScheme.primary
 
     Box(
         modifier = modifier,

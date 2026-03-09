@@ -56,11 +56,9 @@ object UmbralThemeUtils {
      */
     @Composable
     fun backgroundGradient(): Brush {
-        return if (isSystemInDarkTheme()) {
-            DarkBackgroundGradient
-        } else {
-            LightBackgroundGradient
-        }
+        val background = MaterialTheme.colorScheme.background
+        val surface = MaterialTheme.colorScheme.surface
+        return Brush.verticalGradient(colors = listOf(background, surface))
     }
 
     // -------------------------------------------------------------------------
@@ -97,11 +95,9 @@ object UmbralThemeUtils {
      */
     @Composable
     fun accentGradient(): Brush {
-        return if (isSystemInDarkTheme()) {
-            DarkAccentGradient
-        } else {
-            LightAccentGradient
-        }
+        val primary = MaterialTheme.colorScheme.primary
+        val primaryContainer = MaterialTheme.colorScheme.primaryContainer
+        return Brush.horizontalGradient(colors = listOf(primary, primaryContainer))
     }
 
     // -------------------------------------------------------------------------
@@ -138,11 +134,9 @@ object UmbralThemeUtils {
      */
     @Composable
     fun cardGradient(): Brush {
-        return if (isSystemInDarkTheme()) {
-            DarkCardGradient
-        } else {
-            LightCardGradient
-        }
+        val surface = MaterialTheme.colorScheme.surface
+        val surfaceHigh = MaterialTheme.colorScheme.surfaceContainerHigh
+        return Brush.verticalGradient(colors = listOf(surface, surfaceHigh))
     }
 
     // -------------------------------------------------------------------------
@@ -226,13 +220,9 @@ object UmbralThemeUtils {
         center: Offset = Offset.Unspecified,
         radius: Float = Float.POSITIVE_INFINITY
     ): Brush {
-        val colors = if (isSystemInDarkTheme()) {
-            listOf(DarkAccentPrimary, DarkAccentHover)
-        } else {
-            listOf(LightAccentPrimary, LightAccentHover)
-        }
+        val primary = MaterialTheme.colorScheme.primary
         return Brush.radialGradient(
-            colors = listOf(colors[0].copy(alpha = 0.3f), Color.Transparent),
+            colors = listOf(primary.copy(alpha = 0.3f), Color.Transparent),
             center = center,
             radius = radius
         )
@@ -287,10 +277,13 @@ object UmbralThemeUtils {
      */
     @Composable
     fun animatedBackground(): Color {
-        return animatedThemeColor(
-            lightColor = LightBackgroundBase,
-            darkColor = DarkBackgroundBase
+        val color = MaterialTheme.colorScheme.background
+        val animatedColor by animateColorAsState(
+            targetValue = color,
+            animationSpec = tween(300),
+            label = "backgroundAnimation"
         )
+        return animatedColor
     }
 
     /**
@@ -299,10 +292,13 @@ object UmbralThemeUtils {
      */
     @Composable
     fun animatedSurface(): Color {
-        return animatedThemeColor(
-            lightColor = LightBackgroundSurface,
-            darkColor = DarkBackgroundSurface
+        val color = MaterialTheme.colorScheme.surface
+        val animatedColor by animateColorAsState(
+            targetValue = color,
+            animationSpec = tween(300),
+            label = "surfaceAnimation"
         )
+        return animatedColor
     }
 }
 
@@ -317,13 +313,12 @@ object UmbralThemeUtils {
  */
 @Composable
 fun surfaceColorAtElevation(elevation: SurfaceElevation): Color {
-    val isDark = isSystemInDarkTheme()
     return when (elevation) {
-        SurfaceElevation.Level0 -> if (isDark) DarkBackgroundBase else LightBackgroundBase
-        SurfaceElevation.Level1 -> if (isDark) DarkBackgroundSurface else LightBackgroundSurface
-        SurfaceElevation.Level2 -> if (isDark) DarkBackgroundElevated else LightBackgroundElevated
-        SurfaceElevation.Level3 -> if (isDark) DarkBackgroundElevated else LightBackgroundElevated
-        SurfaceElevation.Level4 -> if (isDark) DarkBackgroundElevated else LightBackgroundElevated
+        SurfaceElevation.Level0 -> MaterialTheme.colorScheme.background
+        SurfaceElevation.Level1 -> MaterialTheme.colorScheme.surface
+        SurfaceElevation.Level2 -> MaterialTheme.colorScheme.surfaceContainerLow
+        SurfaceElevation.Level3 -> MaterialTheme.colorScheme.surfaceContainer
+        SurfaceElevation.Level4 -> MaterialTheme.colorScheme.surfaceContainerHigh
     }
 }
 
@@ -353,11 +348,7 @@ fun contentColorFor(surfaceElevation: SurfaceElevation): Color {
  */
 @Composable
 fun accentDimmed(): Color {
-    return if (isSystemInDarkTheme()) {
-        DarkAccentPrimary.copy(alpha = 0.12f)
-    } else {
-        LightAccentPrimary.copy(alpha = 0.08f)
-    }
+    return MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
 }
 
 /**
@@ -376,11 +367,7 @@ fun primaryDimmed(): Color {
  */
 @Composable
 fun dividerColor(): Color {
-    return if (isSystemInDarkTheme()) {
-        DarkBorderDefault.copy(alpha = 0.8f)
-    } else {
-        LightBorderDefault.copy(alpha = 0.8f)
-    }
+    return MaterialTheme.colorScheme.outlineVariant
 }
 
 /**
@@ -420,9 +407,8 @@ fun backgroundGradientBrush(): Brush {
  */
 @Composable
 fun shimmerBrush(translateX: Float): Brush {
-    val isDark = isSystemInDarkTheme()
-    val baseColor = if (isDark) DarkBackgroundSurface else LightBackgroundSurface
-    val highlightColor = if (isDark) DarkBackgroundElevated else LightBackgroundElevated
+    val baseColor = MaterialTheme.colorScheme.surface
+    val highlightColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
     return Brush.linearGradient(
         colors = listOf(baseColor, highlightColor, baseColor),
